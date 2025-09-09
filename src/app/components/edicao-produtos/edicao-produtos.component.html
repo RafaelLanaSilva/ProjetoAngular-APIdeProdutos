@@ -1,0 +1,100 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Edição de produtos</h5>
+        <p class="card-text">Preencha os campos para alterar os dados do produto.</p>
+        <hr />
+
+        <app-mensagens [mensagem]="mensagem"/>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <div class="mb-3">
+                <label>Nome do produto:</label>
+                <input formControlName="nome"
+                    type="text" class="form-control"
+                    placeholder="Digite o nome do produto" />
+
+                <div class="text-danger" *ngIf="form.get('nome')?.touched">
+                    <div *ngIf="form.get('nome')?.hasError('required')">
+                        Por favor, informe o nome do produto.
+                    </div>
+                    <div *ngIf="form.get('nome')?.hasError('minlength')">
+                        Por favor, informe o nome do produto com pelo menos 6 caracteres.
+                    </div>
+                    <div *ngIf="form.get('nome')?.hasError('maxlength')">
+                        Por favor, informe o nome do produto com no máximo 100 caracteres.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label>Preço:</label>
+                <input
+                    formControlName="preco"
+                    type="text" class="form-control"
+                    placeholder="Digite o preço do produto" />
+
+                <div class="text-danger" *ngIf="form.get('preco')?.touched">
+                    <div *ngIf="form.get('preco')?.hasError('required')">
+                        Por favor, informe o preço do produto.
+                    </div>
+                    <div *ngIf="form.get('preco')?.hasError('min')">
+                        Por favor, informe o preço com valor mínimo de '0.01'.
+                    </div>
+                    <div *ngIf="form.get('preco')?.hasError('max')">
+                        Por favor, informe o preço com valor máximo de '999999'.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label>Quantidade:</label>
+                <input formControlName="quantidade"
+                    type="text" class="form-control"
+                    placeholder="Digite a quantidade do produto" />
+
+                <div class="text-danger" *ngIf="form.get('quantidade')?.touched">
+                    <div *ngIf="form.get('quantidade')?.hasError('required')">
+                        Por favor, informe a quantidade do produto.
+                    </div>
+                    <div *ngIf="form.get('quantidade')?.hasError('min')">
+                        Por favor, informe a quantidade com valor mínimo de '0'.
+                    </div>
+                    <div *ngIf="form.get('quantidade')?.hasError('max')">
+                        Por favor, informe a quantidade com valor máximo de '9999'.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label>Categoria:</label>
+                <select class="form-select" formControlName="categoriaId">
+                    <option value="">Escolha uma opção</option>
+                    <option *ngFor="let c of categorias" value="{{ c.id }}">
+                        {{ c.nome }}
+                    </option>
+                </select>    
+               
+                <div class="text-danger" *ngIf="form.get('categoriaId')?.touched">
+                    <div *ngIf="form.get('categoriaId')?.hasError('required')">
+                        Por favor, selecione a categoria do produto.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <input
+                    [disabled]="form.invalid"
+                    type="submit" 
+                    class="btn btn-success" 
+                    value="Salvar alterações" />
+            </div>
+
+        </form>
+
+    </div>
+</div>
